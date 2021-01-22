@@ -1,0 +1,76 @@
+﻿@model IEnumerable<Networking_Project.Models.Ticket>
+
+@{
+    ViewBag.Title = "Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    float ammount = 0;
+}
+
+<!DOCTYPE html>
+<style>
+    #paypal-button-container {
+        text-align: center;
+    }
+</style>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Ensures optimal rendering on mobile devices. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Optimal Internet Explorer compatibility -->
+</head>
+<script src="https://www.paypal.com/sdk/js?client-id=sb"></script>
+<script>paypal.Buttons().render('#paypal-button-container');</script>
+<body>
+
+    <h2>Cart</h2>
+
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Movietitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hall)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Seat)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            ammount += item.Price;
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Movietitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Hall)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Seat)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.ActionLink("Remove", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </table>
+    <br />
+    <h2>Total Price : @ammount ₪</h2>
+    <div id="paypal-button-container" ></div>
+
+
+</body>

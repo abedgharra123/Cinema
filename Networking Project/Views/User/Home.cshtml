@@ -1,0 +1,95 @@
+﻿@model IEnumerable<Networking_Project.Models.Movie>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    //Session["Email"] = "admin";
+}
+@using Networking_Project.Models;
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>home</title>
+</head>
+<body>
+
+    <br />
+    @Html.ActionLink("Most popular", "Mostpopular", "user")
+    <br />
+    @using (Html.BeginForm("Index99", "User", FormMethod.Post))
+    {
+        <span>Sort by : </span> @Html.DropDownList("Select Category", new SelectList(Enum.GetValues(typeof(Categoty))), new { htmlAttributes = new { @class = "form-control" } }) <a style="color:crimson">@ViewBag.category</a>
+        <br />
+        <span>Search by DATE:</span> <input type="date" name="date1" /> <a style="color:crimson">@ViewBag.date5</a>
+        <br />
+        <span>Price range from </span> <input type="number" name="from" value=0 /> <span> to </span> <input type="number" name="to" value=400 /> <a style="color:crimson">@ViewBag.range</a>
+        <br />
+        @Html.CheckBox("Decrease") <span>From highest to lowest price</span>
+        <br />
+        @Html.CheckBox("Increase") <span>From lowest to highest price</span>
+        <br />
+        <input type="submit" value="Filter" />
+    }
+
+
+
+
+
+
+
+    <br />
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                Price ₪
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Picture)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)₪
+                </td>
+                <td>
+                    <img src="@Url.Content(item.Picture)" width="250" height="150" multiple />
+                </td>
+                @if (Session["Email"] != null && Session["Email"].ToString() == "admin")
+                {
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.mid }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.mid }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.mid }) |
+                        @Html.ActionLink("Put on sale", "PutOnSale", new { id = item.mid })
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @Html.ActionLink("Details", "Details", new { id = item.mid }) |
+                        @Html.ActionLink("Pick a seat", "seats", "Ticket", new { id = item.mid }, null)
+                    </td>
+                }
+            </tr>
+        }
+
+    </table>
+</body>
+</html>

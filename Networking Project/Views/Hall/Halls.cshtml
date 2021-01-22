@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Networking_Project.Models.Hall>
+
+@{
+    ViewBag.Title = "Halls";
+}
+
+<h2>Halls</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.HallNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.number_of_seats)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.HallNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.number_of_seats)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new {  id=item.Hid }) |
+            @Html.ActionLink("Delete", "Delete", new {  id=item.Hid })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,103 @@
+﻿@model Networking_Project.Models.Movie
+@using Networking_Project.Models
+@using Networking_Project.Dal
+@{
+    ViewBag.Title = "seats";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    HallDal hd = new HallDal();
+    Hall h = hd.Halls.ToList<Hall>().Where(x => x.HallNumber == Model.Hall).FirstOrDefault();
+
+}
+<script src="~/Scripts/JavaScript.js"></script>
+<style>
+    .screen {
+        width: 30%;
+        height: 20px;
+        background: #4388cc;
+        color: #fff;
+        line-height: 20px;
+        font-size: 15px;
+    }
+</style>
+<h2>Pick a Seat</h2>
+<br />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.Label("Seat number", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.Editor("seat")
+            </div>
+        </div>
+
+        <br />
+
+        <div class="form-group">
+            @Html.Label("Movie ID", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.mid, new { disabled = "true" })
+                @Html.ValidationMessageFor(model => model.mid, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <br />
+        <br />
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Add to cart" class="btn btn-default" /> @ViewBag.check
+            </div>
+        </div>
+    </div>
+}
+@{
+    <h2>Available Seats: </h2>
+    TicketDal tdb = new TicketDal();
+    List<Ticket> t = tdb.Tickets.ToList<Ticket>();
+    int count = 0;
+}
+<div class="screen">SCREEN</div>
+<br />
+<br />
+<text>
+    @for (int i = 1; i <= h.number_of_seats; i++)
+    {
+
+        foreach (Ticket t1 in t)
+        {
+            if (t1.Seat == i && t1.Hall == Model.Hall && t1.Date.Equals(Model.Date))
+            {
+                count++;
+            }
+        }
+        if (count == 0)
+        {
+            var ii = "| " + i.ToString() + " |";
+            <span  style="color:forestgreen" > @ii </span>
+
+        }
+        else
+        {
+            var ii = "|  X  |";
+            <span class="inline" style="color:crimson"> @ii </span>
+        }
+        if (i % 10 == 0)
+        {
+            <br />
+            <br />
+        }
+        count = 0;
+    }
+</text>
+<div>
+    @Html.ActionLink("Back to List", "Home", "User")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

@@ -1,0 +1,36 @@
+﻿@if (Session["Email"] != null)
+{
+    using (Html.BeginForm("Logout", "User", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        if (Session["Email"].ToString() == "admin")
+        {
+            <ul class="nav navbar-nav navbar-right">
+                <li>@Html.ActionLink("Log Out", "Logout", "User", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+
+            </ul>
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Add Movie", "Create", "Movie")</li>
+            </ul>
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Halls", "Halls", "Hall")</li>
+            </ul>
+        }
+        else
+        {
+            <ul class="nav navbar-nav navbar-right">
+                <li>@Html.ActionLink("My Cart", "Cart", "Ticket", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                <li>@Html.ActionLink("Log out", "Logout", "User", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+            </ul>
+        }
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("My Cart", "Cart", "Ticket", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Register", "Register", "User", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "User", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+
+    </ul>
+}
