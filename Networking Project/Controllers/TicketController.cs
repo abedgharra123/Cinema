@@ -22,7 +22,7 @@ namespace Networking_Project.Controllers
         }
 
         [HttpPost]
-        public ActionResult seats(int id, Movie m , int seat)
+        public ActionResult seats(int id, Movie m , int seat = -1)
         {
             MovieDal mdb = new MovieDal();
             Movie m1 = mdb.Movies.ToList<Movie>().Where(x => x.mid == id).FirstOrDefault();

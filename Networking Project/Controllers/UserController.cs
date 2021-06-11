@@ -330,7 +330,7 @@ namespace Networking_Project.Controllers
 
 
             //create a string MD5
-            public static string GetMD5(string str)
+         public static string GetMD5(string str)
         {
             MD5 md5 = new MD5CryptoServiceProvider();
             byte[] fromData = Encoding.UTF8.GetBytes(str);
