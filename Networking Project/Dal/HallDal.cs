@@ -2,8 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Web;
+
 
 namespace Networking_Project.Dal
 {
@@ -15,6 +14,7 @@ namespace Networking_Project.Dal
             modelBuilder.Entity<Hall>().ToTable("Hall");
 
         }
+
         public DbSet<Hall> Halls { get; set; }
     }
 }
